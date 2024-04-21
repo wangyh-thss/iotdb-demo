@@ -1,8 +1,7 @@
 import time
-from distutils.util import strtobool
-from enum import Enum
-from typing import Final
 from common.enum import EnumWithMeta
+from distutils.util import strtobool
+from typing import Final
 
 
 class DataType(EnumWithMeta):

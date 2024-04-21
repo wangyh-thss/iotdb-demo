@@ -9,7 +9,7 @@ class IotdbDemo:
     def __init__(self, data_source: DataSource, data_emitter: DataEmitter):
         self._data_source_ = data_source
         self._data_emitter_ = data_emitter
-        self._logger_ = logging.getLogger(self.__class__)
+        self._logger_ = logging.getLogger(self.__class__.__name__)
 
     @classmethod
     def load_config(cls, config: Config):
