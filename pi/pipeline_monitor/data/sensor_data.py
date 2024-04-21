@@ -29,21 +29,23 @@ class SensorData:
         self._timestamp_ms_ = timestamp_ms
 
     def __str__(self):
-        return "%s[%s]: %s at %s" % (
-            self.name,
-            self.data_type,
-            self._value_,
-            self._timestamp_ms_,
+        formatted_time = time.strftime(
+            "%Y-%m-%d %H:%M:%S", time.localtime(self._timestamp_ms_ / 1000)
         )
+        return f"{self.name}[{self.data_type.name}]: {self._value_} at {formatted_time}"
 
     @property
     def timestamp_ms(self):
         return self._timestamp_ms_
 
+    @property
+    def value(self):
+        return self._value_
+
 
 class BallColorDetectionData(SensorData):
     """
-    Data for ball collor in integer format, where
+    Data for ball color in integer format, where
       - 1 means blue
       - 2 means white
     """

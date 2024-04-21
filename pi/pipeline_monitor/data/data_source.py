@@ -20,17 +20,17 @@ class SerialDataSource(DataSource):
     and should follow the pattern: `<sensor>|<value>`, where the options of <sensor> is defined in sensor_data.py.
     """
 
-    def __init__(self, port: str = "/dev/ttyUSB0", baudrate: int = 115200):
-        self._serial_ = serial.Serial(port, baudrate)
-        self._logger_ = logging.getLogger(self.__class__)
+    def __init__(self, port: str = "/dev/ttyUSB0", baud_rate: int = 115200):
+        self.__serial = serial.Serial(port, baud_rate)
+        self._logger_ = logging.getLogger(self.__class__.__name__)
 
     def read_data(self) -> SensorData:
-        serial_data = self._serial_.readline
+        serial_data = self.__serial.readline()
         if not serial_data:
             return None
-        data_str = serial_data.decode("utf-8")
+        data_str = serial_data.decode("utf-8").strip()
         self._logger_.info(f"Received raw data string: {data_str}")
-        data = self.__parse_data(data_str)
+        data = self._parse_data(data_str)
         self._logger_.info(f"Parsed data: {data}")
         return data
 
@@ -43,7 +43,7 @@ class SerialDataSource(DataSource):
             self.read_data, lambda res: res is not None, timeout_second
         )
 
-    def __parse_data(self, data: str) -> SensorData:
+    def _parse_data(self, data: str) -> SensorData:
         try:
             sensor_tag, value = data.split("|")
         except:
@@ -57,5 +57,5 @@ class DataSourceFactory:
     @staticmethod
     def create(config: DataSourceConfig):
         if config.type == DataSourceConfig.DataSourceType.SERIAL:
-            return SerialDataSource(config.port, config.baudrate)
+            return SerialDataSource(config.port, config.baud_rate)
         raise ValueError(f"Unknown data source type: {config.type}")

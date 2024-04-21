@@ -1,11 +1,10 @@
 reader:
   type: SERIAL
   port: /dev/ttyUSB0
-  baudrate: 115200
+  baud_rate: 115200
 iotdb:
   host: 127.0.0.1
   port: 6667
   user: root
   password: root
   device_id: root.test.device
-

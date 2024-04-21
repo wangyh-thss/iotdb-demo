@@ -7,17 +7,17 @@ class DataSourceConfig:
         UNKNOWN = 0
         SERIAL = 1
 
-    def __init__(self, type: DataSourceType, port: str, baudrate: int):
+    def __init__(self, type: DataSourceType, port: str, baud_rate: int):
         self._type_ = type
         self._port_ = port
-        self._baudrate_ = baudrate
+        self._baud_rate_ = baud_rate
 
     @classmethod
     def from_obj(cls, obj: dict):
         return cls(
             DataSourceConfig.DataSourceType[obj.get("type", "SERIAL")],
             obj.get("port", "/dev/ttyUSB0"),
-            obj.get("baudrate", 115200),
+            obj.get("baud_rate", 115200),
         )
 
     @property
@@ -29,8 +29,8 @@ class DataSourceConfig:
         return self._port_
 
     @property
-    def baudrate(self) -> int:
-        return self._baudrate_
+    def baud_rate(self) -> int:
+        return self._baud_rate_
 
 
 class IotdbConfig:
