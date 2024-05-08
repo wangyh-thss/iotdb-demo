@@ -53,9 +53,36 @@ class BallColorDetectionData(SensorData):
     data_type: Final[DataType] = DataType.INT32
 
 
+class TemperatureData(SensorData):
+    """Data for air temperature"""
+
+    name: Final[str] = "temperature"
+    data_type: Final[DataType] = DataType.FLOAT
+
+
+class HumidityData(SensorData):
+    """Data for relative humidity"""
+
+    name: Final[str] = "humidity"
+    data_type: Final[DataType] = DataType.FLOAT
+
+
+class HeatIndexData(SensorData):
+    """
+    Data for head index which is calculated by temperature and humidity
+    Wiki: https://en.wikipedia.org/wiki/Heat_index
+    """
+
+    name: Final[str] = "heat_index"
+    data_type: Final[DataType] = DataType.FLOAT
+
+
 class SensorType(EnumWithMeta):
     UNKNOWN = 0, EnumWithMeta
     BALL_COLOR = 1, BallColorDetectionData
+    TEMPERATURE = 2, TemperatureData
+    HUMIDITY = 3, HumidityData
+    HEAT_INDEX = 4, HeatIndexData
 
     @staticmethod
     def from_tag(tag: str):
