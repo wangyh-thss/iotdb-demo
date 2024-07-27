@@ -5,7 +5,7 @@
 void blink(int duration_ms)
 {
     digitalWrite(LED_PIN, HIGH);
-    delay(duration_ms);
+    vTaskDelay(duration_ms);
     digitalWrite(LED_PIN, LOW);
 }
 
@@ -57,12 +57,12 @@ void read_ball_color()
             {
                 if (is_blue_ball)
                 {
-                    Serial.println("BALL_COLOR|1");
+                    Serial.println("BALL_COLOR|:|1");
                     led_show_blue();
                 }
                 else
                 {
-                    Serial.println("BALL_COLOR|2");
+                    Serial.println("BALL_COLOR|:|2");
                     led_show_white();
                 }
             }
@@ -79,7 +79,7 @@ void led_show_blue()
 void led_show_white()
 {
     blink(200);
-    delay(100);
+    vTaskDelay(100);
     blink(200);
 }
 
@@ -93,6 +93,7 @@ void detectBallColor(void *params)
         {
             read_ball_color();
         }
+        vTaskDelay(10);
     }
 }
 /*** END: Ball color detection ***/
@@ -107,14 +108,14 @@ void readTemperatureAndHumidity(void *params)
 {
     while (1)
     {
+        vTaskDelay(10000);
         float temperature = dht.readTemperature();
         float humidity = dht.readHumidity();
         float heat_index = dht.computeHeatIndex(temperature, humidity);
-        Serial.println("TEMPERATURE|" + String(temperature));
-        Serial.println("HUMIDITY|" + String(humidity));
-        Serial.println("HEAT_INDEX|" + String(heat_index));
+        Serial.println("TEMPERATURE|:|" + String(temperature));
+        Serial.println("HUMIDITY|:|" + String(humidity));
+        Serial.println("HEAT_INDEX|:|" + String(heat_index));
         blink(1000);
-        delay(10000);
     }
 }
 /*** END: Temperature and humidity ***/
